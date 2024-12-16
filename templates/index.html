@@ -8,17 +8,52 @@
         <link rel="stylesheet" href="">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
-    <body class="bg-info text-white">
+    <body class="bg-dark text-white">
         <div class="text-center">
             <h1 class="mt-5">Weather App</h1>
             <form action="/" method="post">
                 <input type="text" id="cityName" name="cityName" placeholder="City">
                 <button>Find</button>
             </form>
-            {% if data %}
-            <span>The temperature in {{data.city}}:</span>
-            <span>{{ data.temperature}} degrees celsius</span>
+
+            {% if error_message %}
+                <p style="color: red;">{{ error_message }}</p>
             {% endif %}
+            {% if data %}
+                <h3>Temperature in {{ city }}</h3>
+                <span class = "mb-5">{{ temp }} Degrees celsius</span>
+                <div class="table-responsive d-flex justify-content-center">
+                    <table class="table table-striped-columns mt-4 w-75 text-center">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Temperature</th>
+                                <th scope="col">Minimum Temperature</th>
+                                <th scope="col">Maximum Temperature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- {% set count = namespace(value=0) %} -->
+                            {% for value in data %}
+                                <!-- {{ count.value }} {% set count.value = count.value + 1 %}
+                                {% if count.value < 7 %} -->
+                                <tr>
+                                    <td class="col-md-2">{{ value }} </td>
+                                    <td class="row-md-2">{{ data[value][2]['temp'] }} </td>
+                                    <td class="row-md-2">{{ data[value][1]['tempmin'] }} </td>
+                                    <td class="row-md-2">{{ data[value][0]['tempmax'] }} </td>
+                                </tr>
+                                {% endif %}
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+            <!-- {% if data %}
+            <span>The temperature in {{data.city}}:</span>
+            <span>{{ testData}} degrees celsius</span>
+            {% endif %} -->
 
         </div>
         
